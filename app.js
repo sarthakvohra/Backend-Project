@@ -4,6 +4,17 @@ const app = express();
 const authRoutes = require("./routes/authRoutes");
 const { requireAuth, checkUser } = require("./middleware/authMiddleware");
 
+const adminRoutes = require("./routes/adminRoutes");
+
+// //AdminBro
+// const AdminBro = require("admin-bro");
+// const AdminBroExpress = require("@admin-bro/express");
+
+// const adminBro = new AdminBro({
+//   databases: [],
+//   rootPath: '/admin',
+// })
+
 const mongoose = require("mongoose");
 const Blog = require("./models/blog");
 const dbURI =
@@ -18,6 +29,10 @@ mongoose
   .then((result) => app.listen(3000))
   .catch((err) => console.log(err));
 app.set("view engine", "ejs");
+
+// app.use(adminBro.options.rootPath, adminRoutes);
+// app.listen(3000, () => console.log("AdminBro is under localhost:3000/admin"));
+
 //app.set('views', 'views');
 
 //app.listen(3000);   //moved to mongoose.connect()
@@ -73,6 +88,8 @@ app.get("/single-blog", (req, res) => {
 //   ];
 //   res.render("index", { title: "Home", blogs });
 // });
+
+app.use("/admin", adminRoutes);
 
 app.get("*", checkUser);
 
