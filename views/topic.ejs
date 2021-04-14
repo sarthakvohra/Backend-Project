@@ -1,0 +1,17 @@
+<html lang="en">
+  <%- include('./partials/head.ejs') %>
+  <body>
+    <%- include('./partials/nav.ejs') %>
+    <div class="blogs content">
+      <h2>All Topics</h2>
+      <% if(topics.length>0) { %> <% topics.forEach(topic=>{ %>
+      <a class="single" href="/topic/<%=topic.name%>">
+        <h3 class="title"><%=topic.name%></h3>
+        <% }); %> <% } else {%>
+      </a>
+      <p>No topics found.</p>
+      <% } %>
+    </div>
+    <%- include('./partials/footer.ejs') %>
+  </body>
+</html>

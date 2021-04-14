@@ -5,7 +5,7 @@ const authRoutes = require("./routes/authRoutes");
 const { requireAuth, checkUser } = require("./middleware/authMiddleware");
 
 const adminRoutes = require("./routes/adminRoutes");
-
+const contentRoutes = require("./routes/contentRoutes");
 // //AdminBro
 // const AdminBro = require("admin-bro");
 // const AdminBroExpress = require("@admin-bro/express");
@@ -123,6 +123,8 @@ app.get("/blogs/create", (req, res) => {
 app.get("/home", (req, res) => {
   res.render("home", { title: "Home" });
 });
+
+app.use(contentRoutes);
 
 app.use(authRoutes);
 
