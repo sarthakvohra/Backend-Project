@@ -1,0 +1,55 @@
+<html lang="en">
+  <%- include('./partials/head.ejs') %>
+  <body>
+    <h1>Enter the new question</h1>
+    <form action="/newquestion" method="POST">
+      <label for="name">Name</label>
+      <input type="text" name="name" required />
+      <!-- <div class="name error"></div> -->
+      <label for="linkTo">Link</label>
+      <input type="text" name="linkTo" required />
+      <!-- <div class="linkTo error"></div> -->
+      <label for="topic">Topic</label>
+      <select name="topic" required>
+        <% if(topics.length>0){ topics.forEach(topic=>{ %>
+        <option value="<%= topic._id %>"><%=topic.name%></option>
+        <% }); } %>
+      </select>
+      <button>Submit</button>
+    </form>
+    <!-- <script>
+      const form = document.querySelector("form");
+      //   const nameError = document.querySelector(".name.error");
+      //   const linkToError = document.querySelector(".linkTo.error");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const name = form.name.value;
+        const linkTo = form.linkTo.value;
+        const topic = form.topic.value;
+        //resetting errors
+        // emailError.textContent = "";
+        // passwordError.textContent = "";
+        //console.log(email, password);
+        try {
+          const res = await fetch("/newquestion", {
+            method: "POST",
+            body: JSON.stringify({ name, linkTo, topic }),
+            headers: { "Content-Type": "application/json" },
+          });
+          //   const data = await res.json();
+          //   if (data.errors) {
+          //     nameError.textContent = data.errors.name;
+          //     linkToError.textContent = data.errors.linkTo;
+          //   }
+          //   if (data.user) {
+          //     //redirecting
+          //     location.assign("/");
+          //   }
+        } catch (err) {
+          console.log(err);
+        }
+      });
+    </script> -->
+    <%- include('./partials/footer.ejs') %>
+  </body>
+</html>

@@ -19,3 +19,23 @@ module.exports.question = (req, res) => {
       );
   });
 };
+
+module.exports.newQuestion_GET = (req, res) => {
+  Topics.find().then((result) => {
+    res.render("newQuestion", { title: "New Question", topics: result });
+  });
+};
+
+module.exports.newQuestion_POST = (req, res) => {
+  const question = new Questions(req.body);
+  var topic;
+  // console.log(req.body.topic);
+  Topics.findById(req.body.topic).then((result) => {
+    topic = result.name;
+    // console.log("/topic/" + topic);
+  });
+  question
+    .save()
+    .then((result) => res.redirect("/topic/" + topic))
+    .catch((err) => console.log(err));
+};

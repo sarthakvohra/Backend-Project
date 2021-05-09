@@ -7,4 +7,8 @@ const contentController = require("../controllers/contentController");
 router.get("/topic", requireAuth, contentController.topic);
 
 router.get("/topic/:name", requireAuth, contentController.question);
+
+router.get("/newquestion", contentController.newQuestion_GET);
+
+router.post("/newquestion", contentController.newQuestion_POST);
 module.exports = router;
