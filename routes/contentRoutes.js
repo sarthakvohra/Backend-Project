@@ -8,6 +8,8 @@ router.get("/topic", requireAuth, contentController.topic);
 
 router.get("/topic/:name", requireAuth, contentController.question);
 
+router.delete("/topic/:id", contentController.topic_DELETE);
+
 router.get("/newquestion", contentController.newQuestion_GET);
 
 router.post("/newquestion", contentController.newQuestion_POST);

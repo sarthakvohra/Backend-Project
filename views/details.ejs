@@ -5,27 +5,32 @@
     <div class="details content">
       <h2><%= title %></h2>
       <div class="blogs content">
-        <% if(questions.length>0) { %> <% questions.forEach(question=>{ %>
+        <% if(questions.length>0) { questions.forEach(question=>{ %>
         <a href="<%= question.linkTo %>" target="_blank">
           <h3 class="title"><%= question.name %></h3>
         </a>
-        <% }); %> <% } else {%>
+        <% if(admin) { %>
+        <a class="delete" data-doc="<%=question._id %>">delete</a>
+        <% } }); } else {%>
         <p>No topics found.</p>
         <% } %>
       </div>
-      <!-- <a class="delete" data-doc="<%= //question._id %>">delete</a> -->
     </div>
     <%- include('./partials/footer.ejs') %>
 
     <script>
-      // const trashcan = document.querySelector("a.delete");
-      // trashcan.addEventListener("click", (e) => {
-      //   const endpoint = `/blogs/${trashcan.dataset.doc}`;
-      //   fetch(endpoint, { method: "DELETE" })
-      //     .then((response) => response.json())
-      //     .then((data) => (window.location.href = data.redirect))
-      //     .catch((err) => console.log(err));
-      // });
+      console.log("bbb");
+      const trashcans = document.querySelectorAll(".delete");
+      trashcans.forEach((trashcan) => {
+        trashcan.addEventListener("click", (e) => {
+          const endpoint = `/topic/${trashcan.dataset.doc}`;
+          console.log(endpoint);
+          fetch(endpoint, { method: "DELETE" })
+            .then((response) => response.json())
+            .then((data) => (window.location.href = data.redirect))
+            .catch((err) => console.log(err));
+        });
+      });
     </script>
   </body>
 </html>

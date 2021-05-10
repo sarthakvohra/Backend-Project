@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const authRoutes = require("./routes/authRoutes");
 const { requireAuth, checkUser } = require("./middleware/authMiddleware");
+const { isAdmin, requireAdmin } = require("./middleware/adminMiddleware");
 
 const adminRoutes = require("./routes/adminRoutes");
 const contentRoutes = require("./routes/contentRoutes");
@@ -16,7 +17,7 @@ const contentRoutes = require("./routes/contentRoutes");
 // })
 
 const mongoose = require("mongoose");
-const Blog = require("./models/blog");
+// const Blog = require("./models/blog");
 const dbURI =
   "mongodb+srv://sarthakv:test2468@cluster0.wqowg.mongodb.net/node-practice?retryWrites=true&w=majority";
 
@@ -29,7 +30,9 @@ mongoose
   .then((result) => app.listen(3000))
   .catch((err) => console.log(err));
 app.set("view engine", "ejs");
-
+// mongoose.connection.collections.blogs.drop(() => {
+//   console.log("dropped");
+// });
 // app.use(adminBro.options.rootPath, adminRoutes);
 // app.listen(3000, () => console.log("AdminBro is under localhost:3000/admin"));
 
@@ -89,36 +92,37 @@ app.get("/single-blog", (req, res) => {
 //   res.render("index", { title: "Home", blogs });
 // });
 
-app.use("/admin", adminRoutes);
-
 app.get("*", checkUser);
+app.get("*", isAdmin);
+
+app.use("/admin", requireAdmin, adminRoutes);
 
 app.get("/", (req, res) => res.redirect("/home"));
 
-app.get("/blogs", requireAuth, (req, res) => {
-  Blog.find()
-    .sort({ createdAt: -1 }) //newest first
-    .then((result) => {
-      res.render("index", { title: "All Blogs", blogs: result });
-    })
-    .catch((err) => console.log(err));
-});
+// app.get("/blogs", requireAuth, (req, res) => {
+//   Blog.find()
+//     .sort({ createdAt: -1 }) //newest first
+//     .then((result) => {
+//       res.render("index", { title: "All Blogs", blogs: result });
+//     })
+//     .catch((err) => console.log(err));
+// });
 
-app.post("/blogs", (req, res) => {
-  const blog = new Blog(req.body);
-  blog
-    .save()
-    .then((result) => res.redirect("/blogs"))
-    .catch((err) => console.log(err));
-});
+// app.post("/blogs", (req, res) => {
+//   const blog = new Blog(req.body);
+//   blog
+//     .save()
+//     .then((result) => res.redirect("/blogs"))
+//     .catch((err) => console.log(err));
+// });
 
 app.get("/about", (req, res) => {
   res.render("about", { title: "About" });
 });
 
-app.get("/blogs/create", (req, res) => {
-  res.render("create", { title: "Create Blog" });
-});
+// app.get("/blogs/create", (req, res) => {
+//   res.render("create", { title: "Create Blog" });
+// });
 
 app.get("/home", (req, res) => {
   res.render("home", { title: "Home" });
@@ -128,23 +132,23 @@ app.use(contentRoutes);
 
 app.use(authRoutes);
 
-app.get("/blogs/:id", (req, res) => {
-  const id = req.params.id;
-  Blog.findById(id)
-    .then((result) =>
-      res.render("details", { blog: result, title: result.title })
-    )
-    .catch((err) => res.status(404).render("404", { title: "Page not found" }));
-});
+// app.get("/blogs/:id", (req, res) => {
+//   const id = req.params.id;
+//   Blog.findById(id)
+//     .then((result) =>
+//       res.render("details", { blog: result, title: result.title })
+//     )
+//     .catch((err) => res.status(404).render("404", { title: "Page not found" }));
+// });
 
-app.delete("/blogs/:id", (req, res) => {
-  const id = req.params.id;
-  Blog.findByIdAndDelete(id)
-    .then((result) => {
-      res.json({ redirect: "/blogs" });
-    })
-    .catch((err) => console.log(err));
-});
+// app.delete("/blogs/:id", (req, res) => {
+//   const id = req.params.id;
+//   Blog.findByIdAndDelete(id)
+//     .then((result) => {
+//       res.json({ redirect: "/blogs" });
+//     })
+//     .catch((err) => console.log(err));
+// });
 
 app.use((req, res) => {
   res.status(404).render("404", { title: "Create Blog" });

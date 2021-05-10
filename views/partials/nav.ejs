@@ -1,15 +1,15 @@
 <nav>
   <div class="site-title">
-    <a href="/"><h1>Sarthak's Blog</h1></a>
+    <a href="/"><h1>Sarthak's Interview Tracker</h1></a>
     <p>Created by Sarthak</p>
   </div>
   <ul>
     <% if(user){ %>
     <li>Welcome, <%= user.email %></li>
-    <li><a href="/blogs">Blogs</a></li>
+    <li><a href="/topic">Topics</a></li>
     <li><a href="/about">About</a></li>
     <li>
-      <a href="/blogs/create">Create a new blog</a>
+      <a href="/newquestion">Create a new Question</a>
     </li>
     <li><a href="/logout">Logout</a></li>
     <% }else{ %>
