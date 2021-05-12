@@ -1,6 +1,5 @@
 const Topics = require("../models/topic");
 const Questions = require("../models/question");
-const mongoose = require("mongoose");
 
 module.exports.topic = (req, res) => {
   Topics.find().then((result) => {

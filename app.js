@@ -45,6 +45,10 @@ app.get("/home", (req, res) => {
   res.render("home", { title: "Home" });
 });
 
+app.get("/contact", requireAuth, (req, res) => {
+  res.render("contact", { title: "Contact Us" });
+});
+
 app.use(contentRoutes);
 
 app.use(authRoutes);

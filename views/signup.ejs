@@ -1,39 +1,180 @@
+<!DOCTYPE html>
 <html lang="en">
-  <%- include('./partials/head.ejs') %>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="TemplateMo" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>SignUp</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="assets/css/fontawesome.css" />
+    <link rel="stylesheet" href="assets/css/templatemo-finance-business.css" />
+    <link rel="stylesheet" href="assets/css/owl.css" />
+    <!--
+
+Finance Business TemplateMo
+
+https://templatemo.com/tm-545-finance-business
+
+-->
+  </head>
+
   <body>
-    <h1>sign up</h1>
-    <form>
-      <label for="email">Email</label>
-      <input type="text" name="email" required />
-      <div class="email error"></div>
-      <label for="password">Password</label>
-      <input type="password" name="password" required />
-      <div class="password error"></div>
-      <button>Sign Up</button>
-    </form>
+    <!-- ***** Preloader Start ***** -->
+    <div id="preloader">
+      <div class="jumper">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+
+    <%- include('./partials/nav.ejs') %>
+
+    <!-- Page Content -->
+    <div class="page-heading header-text">
+      <!-- <div class="container"> 
+         <div class="row">
+          <div class="col-md-12">
+            <h1>SignUp</h1>
+            </div>
+        </div> 
+      </div> -->
+    </div>
+
+    <!-- <div class="contact-information">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="contact-item">
+              <i class="fa fa-phone"></i>
+              <h4>Phone</h4>
+              
+              <a href="#">091-9999999999</a>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="contact-item">
+              <i class="fa fa-envelope"></i>
+              <h4>Email</h4>
+  
+              <a href="#">     admin@interviewtracker.com</a>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="contact-item">
+              <i class="fa fa-map-marker"></i>
+              <h4>Location</h4>
+          
+              <a href="https://www.google.com/maps/place/DLF+CyberHub/@28.495179,77.0869248,17z/data=!3m1!4b1!4m5!3m4!1s0x390d19386394df05:0x2f2805b9b4942a41!8m2!3d28.495179!4d77.0891135">View on Google Maps</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <div class="callback-form contact-us">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="section-heading">
+              <h2>Sign<em> Up</em></h2>
+              <!-- <span>Suspendisse a ante in neque iaculis lacinia</span> -->
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="contact-form">
+              <form id="contact" action="" method="get">
+                <div class="row">
+                  <div class="col-lg-4 col-md-12 col-sm-12">
+                    <fieldset>
+                      <input
+                        name="name"
+                        type="text"
+                        class="form-control"
+                        placeholder="Name"
+                        required=""
+                      />
+                    </fieldset>
+                  </div>
+                  <div class="col-lg-4 col-md-12 col-sm-12">
+                    <fieldset>
+                      <input
+                        name="email"
+                        type="email"
+                        class="form-control"
+                        placeholder="Email Address"
+                        required=""
+                      />
+                    </fieldset>
+                  </div>
+                  <div class="col-lg-4 col-md-12 col-sm-12">
+                    <fieldset>
+                      <input
+                        name="password"
+                        type="password"
+                        class="form-control"
+                        placeholder="Password"
+                        required=""
+                      />
+                    </fieldset>
+                  </div>
+
+                  <!-- <div class="col-lg-12">
+                    <fieldset>
+                      <textarea name="message" rows="6" class="form-control" id="message" placeholder="Your Message" required=""></textarea>
+                    </fieldset>
+                  </div> -->
+                  <div class="col-lg-12">
+                    <fieldset>
+                      <button class="filled-button">SignUp</button>
+                    </fieldset>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script>
       const form = document.querySelector("form");
-      const emailError = document.querySelector(".email.error");
-      const passwordError = document.querySelector(".password.error");
+      // const emailError = document.querySelector(".email.error");
+      // const passwordError = document.querySelector(".password.error");
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
+        const name = form.name.value;
         const email = form.email.value;
         const password = form.password.value;
         //resetting errors
-        emailError.textContent = "";
-        passwordError.textContent = "";
+        // emailError.textContent = "";
+        // passwordError.textContent = "";
         //console.log(email, password);
         try {
           const res = await fetch("/signup", {
             method: "POST",
-            body: JSON.stringify({ email, password }),
+            body: JSON.stringify({ name, email, password }),
             headers: { "Content-Type": "application/json" },
           });
           const data = await res.json();
-          if (data.errors) {
-            emailError.textContent = data.errors.email;
-            passwordError.textContent = data.errors.password;
-          }
+          // if (data.errors) {
+          //   emailError.textContent = data.errors.email;
+          //   passwordError.textContent = data.errors.password;
+          // }
           if (data.user) {
             //redirecting
             location.assign("/");
@@ -43,6 +184,30 @@
         }
       });
     </script>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Additional Scripts -->
+    <script src="assets/js/custom.js"></script>
+    <script src="assets/js/owl.js"></script>
+    <script src="assets/js/slick.js"></script>
+    <script src="assets/js/accordions.js"></script>
+
+    <script language="text/Javascript">
+      cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+      function clearField(t) {
+        //declaring the array outside of the
+        if (!cleared[t.id]) {
+          // function makes it static and global
+          cleared[t.id] = 1; // you could use true and false, but that's more typing
+          t.value = ""; // with more chance of typos
+          t.style.color = "#fff";
+        }
+      }
+    </script>
+
     <%- include('./partials/footer.ejs') %>
   </body>
 </html>

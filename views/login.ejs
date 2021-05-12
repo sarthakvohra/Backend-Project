@@ -1,49 +1,140 @@
+<!DOCTYPE html>
 <html lang="en">
-  <%- include('./partials/head.ejs') %>
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="TemplateMo">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <title>Login</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/templatemo-finance-business.css">
+    <link rel="stylesheet" href="assets/css/owl.css">
+  </head>
+
   <body>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>  
+    <!-- ***** Preloader End ***** -->
+
     <%- include('./partials/nav.ejs') %>
-    <h1>Login</h1>
-    <form>
-      <label for="email">Email</label>
-      <input type="text" name="email" required />
-      <div class="email error"></div>
-      <label for="password">Password</label>
-      <input type="password" name="password" required />
-      <div class="password error"></div>
-      <button>Login</button>
-    </form>
-    <script>
-      const form = document.querySelector("form");
-      const emailError = document.querySelector(".email.error");
-      const passwordError = document.querySelector(".password.error");
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const email = form.email.value;
-        const password = form.password.value;
-        //resetting errors
-        emailError.textContent = "";
-        passwordError.textContent = "";
-        //console.log(email, password);
-        try {
-          const res = await fetch("/login", {
-            method: "POST",
-            body: JSON.stringify({ email, password }),
-            headers: { "Content-Type": "application/json" },
-          });
-          const data = await res.json();
-          if (data.errors) {
-            emailError.textContent = data.errors.email;
-            passwordError.textContent = data.errors.password;
+
+    <!-- Page Content -->
+    <div class="page-heading header-text" >
+    </div>
+    <div class="callback-form contact-us">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="section-heading">
+              <h2>Log<em> In</em></h2>
+              <!-- <span>Suspendisse a ante in neque iaculis lacinia</span> -->
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="contact-form">
+              <form id="form" name="form" action="" method="get">
+                  <div class="col-lg-4 col-md-12 col-sm-12">
+                    <fieldset>
+                      <input name="email" type="email" class="form-control"  placeholder="Email Address" required="">
+                    </fieldset>
+                    <div class="email error"></div>
+                  </div>
+                  <div class="col-lg-4 col-md-12 col-sm-12">
+                    <fieldset>
+                      <input name="password" type="password" class="form-control"  placeholder="Password" required="">
+                    </fieldset>
+                    <div class="password error"></div>
+                  </div>
+                  <div class="col-lg-12">
+                    <fieldset>
+                      <button class="filled-button">Login</button>
+                    </fieldset>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+<script>const form =document.querySelector('form');
+  const emailError = document.querySelector('.email.error');
+  const passwordError = document.querySelector('.password.error');
+  form.addEventListener('submit',async(e)=>{
+      e.preventDefault();    //prevents deafult action of refreshing of page
+
+
+      //reset errors
+      emailError.textContent='';
+      
+       passwordError.textContent='';
+      //get values
+          const email = form.email.value;
+          const password= form.password.value;
+          try{
+              const res = await fetch('/login',{
+                  method: 'POST',
+                  body: JSON.stringify({email:email,password:password}),
+                  headers:{'Content-Type': "application/json"}
+              });
+              const data=await res.json();
+              console.log(data);
+              if(data.errors)
+              {
+                  emailError.textContent=data.errors.email;
+                  
+                  passwordError.textContent=data.errors.password;
+              } 
+
+              if(data.user)
+              {
+                  location.assign('/home');
+              }
           }
-          if (data.user) {
-            //redirecting
-            location.assign("/");
+          catch(err){console.log(err);}
+  });</script>
+   
+
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Additional Scripts -->
+    <script src="assets/js/custom.js"></script>
+    <script src="assets/js/owl.js"></script>
+    <script src="assets/js/slick.js"></script>
+    <script src="assets/js/accordions.js"></script>
+
+    <script language = "text/Javascript"> 
+      cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+      function clearField(t){                   //declaring the array outside of the
+      if(! cleared[t.id]){                      // function makes it static and global
+          cleared[t.id] = 1;  // you could use true and false, but that's more typing
+          t.value='';         // with more chance of typos
+          t.style.color='#fff';
           }
-        } catch (err) {
-          console.log(err);
-        }
-      });
+      }
     </script>
-    <%- include('./partials/footer.ejs') %>
+
+<%- include('./partials/footer.ejs') %>
   </body>
 </html>
