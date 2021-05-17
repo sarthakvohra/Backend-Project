@@ -4,7 +4,7 @@ const User = require("../models/user");
 const requireAuth = (req, res, next) => {
   const token = req.cookies.jwt;
   if (token) {
-    jwt.verify(token, "Sarthak's Secret String", (err, decodedToken) => {
+    jwt.verify(token, "", (err, decodedToken) => {
       if (err) {
         res.redirect("/login");
       } else {
@@ -20,7 +20,7 @@ const requireAuth = (req, res, next) => {
 const checkUser = (req, res, next) => {
   const token = req.cookies.jwt;
   if (token) {
-    jwt.verify(token, "Sarthak's Secret String", async (err, decodedToken) => {
+    jwt.verify(token, "", async (err, decodedToken) => {
       if (err) {
         res.locals.user = null;
         next();
