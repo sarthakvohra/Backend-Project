@@ -10,7 +10,7 @@ const contentRoutes = require("./routes/contentRoutes");
 
 const mongoose = require("mongoose");
 const dbURI =
-  "mongodb+srv://sarthakv:test2468@cluster0.wqowg.mongodb.net/node-practice?retryWrites=true&w=majority";
+  "";
 
 mongoose
   .connect(dbURI, {
