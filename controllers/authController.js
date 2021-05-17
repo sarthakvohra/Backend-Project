@@ -26,7 +26,7 @@ const handleErrors = (err) => {
 
 const maxAge = 30 * 60; //30 minutes(in seconds)
 const createToken = (id) => {
-  return jwt.sign({ id }, "Sarthak's Secret String", { expiresIn: maxAge });
+  return jwt.sign({ id }, "", { expiresIn: maxAge });
 };
 
 module.exports.signup_get = (req, res) => {
